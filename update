@@ -1,0 +1,25 @@
+#!/bin/bash
+if [ -f "elever-server" ]; then
+    rm elever-server
+fi
+wget http://elephantvs-system-software.googlecode.com/svn/trunk/elever-server
+echo "THE CURRENT VERSION IS"
+cat elever-local
+echo "THE LATEST VERSION IS"
+cat elever-server
+declare -i old
+declare -i new
+read old<elever-local
+read new<elever-server
+if [ $new -gt $old ]; then
+    echo "START UPDATING"
+    if [ -f "elesoft.tar.bz2" ]; then
+        rm elesoft.tar.bz2
+    fi
+    wget http://elephantvs-system-software.googlecode.com/svn/trunk/elesoft.tar.bz2
+    tar -xvf elesoft.tar.bz2
+    echo $new>elever-local
+    echo "FINISHED"
+else
+    echo "LATEST VERSION ALREADY"
+fi
