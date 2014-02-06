@@ -1,25 +1,32 @@
 #!/bin/bash
-if [ -f "elever-server" ]; then
-    rm elever-server
-fi
-wget http://elephantvs-system-software.googlecode.com/svn/trunk/elever-server
-echo "THE CURRENT VERSION IS"
-cat elever-local
-echo "THE LATEST VERSION IS"
-cat elever-server
-declare -i old
-declare -i new
-read old<elever-local
-read new<elever-server
-if [ $new -gt $old ]; then
-    echo "START UPDATING"
-    if [ -f "elesoft.tar.bz2" ]; then
-        rm elesoft.tar.bz2
-    fi
-    wget http://elephantvs-system-software.googlecode.com/svn/trunk/elesoft.tar.bz2
-    tar -xvf elesoft.tar.bz2
-    echo $new>elever-local
-    echo "FINISHED"
+
+if ifconfig|grep -q "UP BROADCAST MULTICAST"; then
+    echo "NO INTERNET CONNECTION"
 else
-    echo "LATEST VERSION ALREADY"
+    if [ -f "elever-server" ]; then
+        rm elever-server
+    fi
+    echo "CONNECTING TO SERVER"
+    wget http://elephantvs-system-software.googlecode.com/svn/trunk/elever-server
+    echo "YOUR CURRENT VERSION IS"
+    cat elever-local
+    echo "THE LATEST VERSION IS"
+    cat elever-server
+    declare -i old
+    declare -i new
+    read old<elever-local
+    read new<elever-server
+    if [ $new -gt $old ]; then
+        echo "START UPDATING"
+        if [ -f "elesoft.tar.bz2" ]; then
+            rm elesoft.tar.bz2
+        fi
+        echo "DOWNLOADING"
+        wget http://elephantvs-system-software.googlecode.com/svn/trunk/elesoft.tar.bz2
+        tar -xvf elesoft.tar.bz2
+        echo $new>elever-local
+        echo "FINISHED"
+    else
+        echo "LATEST VERSION ALREADY"
+    fi
 fi
