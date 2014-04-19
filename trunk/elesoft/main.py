@@ -5,6 +5,7 @@ from eledef import *
 
 # New little programs listed here
 import addnum
+import tinyrpg
 
 # Main part preparation
 welcomeinfo = '''NOW YOU HAVE ENTERED
@@ -12,7 +13,7 @@ THE ELEPHANTVS SYSTEM
 USERS INTERFACE
 ENTER 'HELP' FOR ALL COMMANDS AVAILABLE'''
 # New little programs APPENDED here
-cmdlst=['HELP', 'EXIT', 'ADDNUM']
+cmdlst=['HELP', 'EXIT', 'ADDNUM', 'TINYRPG']
 def help():
     print 'HERE ARE THE COMMANDS AVAILABLE:'
     for cmd in cmdlst:
@@ -31,6 +32,8 @@ while cmdinput != 'EXIT':
 # New little programs added here
     elif cmdinput == 'ADDNUM':
         addnum.run()
+    elif cmdinput == 'TINYRPG':
+        tinyrpg.run()
     else:
         if not cmdinput in cmdlst:
             print 'COMMAND NOT FOUND'
